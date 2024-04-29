@@ -9,13 +9,10 @@ const {
 const app = express();
 const port = 3000;
 
-// Configurar o multer para lidar com uploads de arquivos
 const upload = multer({ dest: 'uploads/' });
 
-// Servir os arquivos estáticos (HTML, CSS, JS)
 app.use(express.static('public'));
 
-// Rota para lidar com o upload de arquivos
 app.post('/upload', upload.array('pdfs'), async (req, res) => {
     try {
         const client = new DocumentAnalysisClient(endpoint, new AzureKeyCredential(key));
@@ -27,11 +24,9 @@ app.post('/upload', upload.array('pdfs'), async (req, res) => {
             const { pages, tables } = await poller.pollUntilDone();
             responses.push({ pages, tables });
 
-            // Remover o arquivo após a análise
             fs.unlinkSync(file.path);
         }
 
-        // Exibir as respostas em um campo rico
         res.send(responses);
 
     } catch (error) {
@@ -40,7 +35,6 @@ app.post('/upload', upload.array('pdfs'), async (req, res) => {
     }
 });
 
-// Configurações do Azure
 const key = "2bbedcbd919745caac1e7d57d5a19441";
 const endpoint = "https://pdf-aut-ia.cognitiveservices.azure.com/";
 

@@ -24,7 +24,7 @@ function displayResponse(data) {
     const responseDiv = document.getElementById('response');
     responseDiv.innerHTML = '';
 
-    data.forEach((documentData, index) => { // Renomeando a variável "document" para "documentData" para evitar conflito com o objeto global "document"
+    data.forEach((documentData, index) => { 
         const documentDiv = document.createElement('div');
         documentDiv.classList.add('document');
 
